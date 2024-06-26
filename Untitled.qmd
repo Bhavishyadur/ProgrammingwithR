@@ -1,0 +1,67 @@
+---
+title: "Cars_homeworkassignment"
+format: pdf
+author: Bhavishya Durbha 
+editor: visual
+---
+
+```{r}
+# Load the required libraries
+library(ggplot2)
+library(dplyr)
+
+# Load the mtcars dataset
+data("mtcars")
+
+# Display the initial few rows of the dataset
+head(mtcars)
+
+# Calculate and display summary statistics for weight and miles per gallon
+summary_stats <- mtcars %>%
+  summarize(
+    min_wt = min(wt),
+    max_wt = max(wt),
+    mean_wt = mean(wt),
+    median_wt = median(wt),
+    first_quartile_wt = quantile(wt, 0.25),
+    third_quartile_wt = quantile(wt, 0.75),
+    min_mpg = min(mpg),
+    max_mpg = max(mpg),
+    mean_mpg = mean(mpg),
+    median_mpg = median(mpg),
+    first_quartile_mpg = quantile(mpg, 0.25),
+    third_quartile_mpg = quantile(mpg, 0.75)
+  )
+
+print("Summary Statistics:")
+print(summary_stats)
+
+# Create a scatter plot of weight vs miles per gallon, including a regression line
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth(method = "lm", col = "blue") +
+  labs(
+    title = "Relationship between Car Weight and Miles Per Gallon",
+    x = "Weight (1000 lbs)",
+    y = "Miles Per Gallon (mpg)"
+  ) +
+  theme_minimal()
+
+# Calculate and display the correlation between weight and miles per gallon
+correlation <- cor(mtcars$wt, mtcars$mpg)
+print(paste("Correlation between weight and miles per gallon:", correlation))
+
+# Provide an interpretation of the results
+cat("Interpretation:\n")
+cat("The summary statistics show that the car weights range from", summary_stats$min_wt, "to", summary_stats$max_wt, 
+    "with an average of", round(summary_stats$mean_wt, 2), "thousand pounds. The miles per gallon range from", 
+    summary_stats$min_mpg, "to", summary_stats$max_mpg, "with an average of", round(summary_stats$mean_mpg, 2), "mpg.\n")
+cat("The scatter plot with a regression line suggests that there is a negative correlation between car weight and miles per gallon,",
+    "indicating that heavier cars tend to have lower fuel efficiency.\n")
+cat("This is confirmed by the correlation coefficient of", round(correlation, 2), "which shows a strong negative correlation.\n")
+
+```
+
+```{r}
+
+```
